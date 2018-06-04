@@ -1,17 +1,20 @@
 FROM microsoft/dotnet:2.1-aspnetcore-runtime
-
 LABEL maintainer="ROY <qqbuby@gmail.com>"
 
+# set up krb5, unixodbc
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         unixodbc \
         krb5-user \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://downloads.cloudera.com/connectors/impala_odbc_2.5.40.1025/Debian/clouderaimpalaodbc_2.5.40.1025-2_amd64.deb \
-        -o /tmp/clouderaimpalaodbc_2.5.40.1025-2_amd64.deb \
-    && dpkg -i /tmp/clouderaimpalaodbc_2.5.40.1025-2_amd64.deb \
-    && rm /tmp/clouderaimpalaodbc_2.5.40.1025-2_amd64.deb
+# set up impala odbc connector for cloudea 
+ENV IMPALA_ODBC_CONNECTOR_VERSION 2.5.42.1031
+ENV IMPALA_ODBC_CONNECTOR_DOWNLOAD_URL https://downloads.cloudera.com/connectors/impala_odbc_$IMPALA_ODBC_CONNECTOR_VERSION/Debian/clouderaimpalaodbc_$IMPALA_ODBC_CONNECTOR_VERSION-2_amd64.deb
+
+RUN curl -SL "$IMPALA_ODBC_CONNECTOR_DOWNLOAD_URL" -o $clouderaimpalaodbc_CLOUDERA_IMPALA_ODBC_VERSION-2_amd64.deb \
+    && dpkg -i clouderaimpalaodbc_$CLOUDERA_IMPALA_ODBC_VERSION-2_amd64.deb \
+    && rm clouderaimpalaodbc_$CLOUDERA_IMPALA_ODBC_VERSION-2_amd64.deb
 
 COPY ./files/odbcinst.ini /etc/odbcinst.ini
 COPY ./files/cloudera.impalaodbc.ini /opt/cloudera/impalaodbc/lib/64/cloudera.impalaodbc.ini
