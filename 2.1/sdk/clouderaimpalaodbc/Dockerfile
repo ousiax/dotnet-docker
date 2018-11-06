@@ -2,8 +2,8 @@ FROM microsoft/dotnet:2.1-sdk
 LABEL maintainer="ROY <qqbuby@gmail.com>"
 
 # set up node
-ENV NODE_VERSION 8.11.2
-ENV NODE_DOWNLOAD_SHA 67dc4c06a58d4b23c5378325ad7e0a2ec482b48cea802252b99ebe8538a3ab79
+ENV NODE_VERSION 10.13.0
+ENV NODE_DOWNLOAD_SHA b4b5d8f73148dcf277df413bb16827be476f4fa117cbbec2aaabc8cc0a8588e1
 ENV NODE_DOWNLOAD_URL https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz
 
 RUN curl -sSL "$NODE_DOWNLOAD_URL" -o nodejs.tar.gz \
