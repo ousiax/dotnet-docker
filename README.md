@@ -1,7 +1,7 @@
 # .NET Core Docker
 
 ```dockerfile
-FROM microsoft/dotnet:2.1-aspnetcore-runtime
+FROM microsoft/dotnet:2.2-aspnetcore-runtime
 LABEL maintainer="ROY <qqbuby@gmail.com>"
 
 # set up krb5, unixodbc
