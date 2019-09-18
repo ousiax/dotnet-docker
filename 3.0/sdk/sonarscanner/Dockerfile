@@ -4,7 +4,7 @@ LABEL maintainer="ROY <qqbuby@gmail.com>"
 # set java runtime environemnt
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        openjdk-8-jre-headless \
+        openjdk-11-jre-headless \
     && rm -rf /var/lib/apt/lists/*
 
 # set dotnet global tool dotnet-sonarscanner
