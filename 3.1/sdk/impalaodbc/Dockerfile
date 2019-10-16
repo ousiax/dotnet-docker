@@ -1,0 +1,41 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+LABEL maintainer="ROY <qqbuby@gmail.com>"
+
+# set up node
+ENV NODE_VERSION 10.13.0
+ENV NODE_DOWNLOAD_SHA b4b5d8f73148dcf277df413bb16827be476f4fa117cbbec2aaabc8cc0a8588e1
+ENV NODE_DOWNLOAD_URL https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz
+
+RUN curl -sSL "$NODE_DOWNLOAD_URL" -o nodejs.tar.gz \
+    && echo "$NODE_DOWNLOAD_SHA nodejs.tar.gz" | sha256sum -c - \
+    && tar -xzf "nodejs.tar.gz" -C /usr/local --strip-components=1 \
+    && rm nodejs.tar.gz \
+&& ln -s /usr/local/bin/node /usr/local/bin/nodejs
+
+# set up yarn, krb5, unixodbc
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        apt-transport-https \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        krb5-user \
+        unixodbc \
+        unixodbc-dev \
+        yarn \
+    && rm -rf /var/lib/apt/lists/*
+
+# set up impala odbc connector for cloudea
+ENV IMPALA_ODBC_CONNECTOR_VERSION 2.6.5.1005
+ENV IMPALA_ODBC_CONNECTOR_RELEASE 2
+ENV IMPALA_ODBC_CONNECTOR_DOWNLOAD_URL https://downloads.cloudera.com/connectors/ClouderaImpala_ODBC_${IMPALA_ODBC_CONNECTOR_VERSION}/Debian/clouderaimpalaodbc_${IMPALA_ODBC_CONNECTOR_VERSION}-${IMPALA_ODBC_CONNECTOR_RELEASE}_amd64.deb
+
+RUN curl -sSL "$IMPALA_ODBC_CONNECTOR_DOWNLOAD_URL" -o clouderaimpalaodbc.deb \
+    && dpkg -i clouderaimpalaodbc.deb \
+    && rm clouderaimpalaodbc.deb
+
+COPY ./files/cloudera.impalaodbc.ini /opt/cloudera/impalaodbc/lib/64/cloudera.impalaodbc.ini
+COPY ./files/odbcinst.ini /etc/odbcinst.ini
