@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 LABEL maintainer="ROY <qqbuby@gmail.com>"
 
 # set up krb5, unixodbc
