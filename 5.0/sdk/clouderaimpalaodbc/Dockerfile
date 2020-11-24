@@ -16,6 +16,7 @@ RUN curl -sSL "$NODE_DOWNLOAD_URL" -o nodejs.tar.gz \
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         apt-transport-https \
+        gnupg \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
