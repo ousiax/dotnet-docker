@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 LABEL maintainer="ROY <qqbuby@gmail.com>"
 
-# set up krb5, unixodbc
+# set curl
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         curl \
@@ -18,10 +18,12 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0
 LABEL maintainer="ROY <qqbuby@gmail.com>"
 
 # set up krb5, unixodbc
+ENV KRB5_USER_VERSION=1.17-3+deb10u1
+ENV UNIXODBC_VERSION=2.3.6-0.1
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        unixodbc \
-        krb5-user \
+        krb5-user=${KRB5_USER_VERSION} \
+        unixodbc=${UNIXODBC_VERSION} \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=0 /tmp/clouderaimpalaodbc.deb .
