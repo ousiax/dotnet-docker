@@ -13,6 +13,10 @@ RUN curl -sSL "$NODE_DOWNLOAD_URL" -o nodejs.tar.gz \
 && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
 # set up yarn, krb5, unixodbc
+ENV KRB5_USER_VERSION=1.17-3+deb10u1
+ENV UNIXODBC_VERSION=2.3.6-0.1
+ENV UNIXODBC_DEV_VERSION=2.3.6-0.1
+ENV YARN_VERSION=1.22.5-1
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         apt-transport-https \
@@ -23,10 +27,10 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        krb5-user \
-        unixodbc \
-        unixodbc-dev \
-        yarn \
+        krb5-user=${KRB5_USER_VERSION} \
+        unixodbc=${UNIXODBC_VERSION} \
+        unixodbc-dev=${UNIXODBC_DEV_VERSION} \
+        yarn=${YARN_VERSION} \
     && rm -rf /var/lib/apt/lists/*
 
 # set up impala odbc connector for cloudea
