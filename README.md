@@ -1,5 +1,7 @@
 # .NET Core Docker
 
+Blog: [Cloudera ODBC Driver for Impala on Debian/Linux with .NET Core 2.0](https://blog.codefarm.me/2017/11/16/cloudera-odbc-driver-for-impala-on-debian-linux-with-.net-core-2.0/)
+
 [![](https://images.microbadger.com/badges/version/qqbuby/dotnet:2.2-sdk-clouderaimpalaodbc.svg)](https://microbadger.com/images/qqbuby/dotnet:2.2-sdk-clouderaimpalaodbc "Get your own version badge on microbadger.com")[![](https://images.microbadger.com/badges/image/qqbuby/dotnet:2.2-sdk-clouderaimpalaodbc.svg)](https://microbadger.com/images/qqbuby/dotnet:2.2-sdk-clouderaimpalaodbc "Get your own image badge on microbadger.com")
 
 [![](https://images.microbadger.com/badges/version/qqbuby/dotnet:2.2-aspnetcore-runtime-clouderaimpalaodbc.svg)](https://microbadger.com/images/qqbuby/dotnet:2.2-aspnetcore-runtime-clouderaimpalaodbc "Get your own version badge on microbadger.com")[![](https://images.microbadger.com/badges/image/qqbuby/dotnet:2.2-aspnetcore-runtime-clouderaimpalaodbc.svg)](https://microbadger.com/images/qqbuby/dotnet:2.2-aspnetcore-runtime-clouderaimpalaodbc "Get your own image badge on microbadger.com")
